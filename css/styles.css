@@ -25,4 +25,43 @@ nav ul {
 body {
   margin: 0;
   font-family: sans-serif;
+  background-color: black;
+  color: aliceblue;
+}
+
+.game-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+}
+.title{
+  font-size: 50px;
+  font-style: bold;
+}
+
+.input-solution{
+  width: 300px;
+  height: 30px;
+  border: solid 1px white;
+  border-radius: 10px;
+  background-color: transparent;
+  padding-left: 10px;
+}
+
+.gameboard{
+
+}
+
+.gameboard-row{
+  gap: 10px;
+
+}
+
+.letter-container{
+background-color: transparent;
+border: solid 1px white;
+border-radius: 5px;
 }

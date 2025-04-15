@@ -38,28 +38,28 @@ const validateWord = event => {
   event.preventDefault();
 
   //numero de intentos
-  // numberOfAttempts++;
-  // if(numberOfAttempts>5){
-  //   const alert=document.createElement('span');
-  //   alert.classList.add('alert');
-  //   alert.textContent='Has perdido';
-  //   gameboardElement.append(alert);
-  // }
+  numberOfAttempts++;
+  if(numberOfAttempts>5){
+    const alert=document.createElement('span');
+    alert.classList.add('alert');
+    alert.textContent='Has perdido';
+    gameboardElement.append(alert);
+    formElement.remove();
+  }
+  //validar palabra
   const userWord = userWordInputElement.value.split(''); //guardar por letra
   console.log(userWord);
 
-  const fragment = document.createDocumentFragment();
+  //primero ubico la fila
+  const row = gameboardElement.children[numberOfAttempts-1]; //esta es la fila y que empiece en 0 
+  const letterSpace= row.children; //esto son los espacios de la fila
 
-  userWord.forEach(letter => {
-    const userletterElement = document.createElement('span'); 
-    userletterElement.textContent = letter; //hago la letra
-    userletterElement.classList.add('letter-container'); //le doy estilo
-    fragment.append(userletterElement);
+  userWord.forEach((letter,index)=> { //el index lo detecta en automatico al ser un forEach
+    letterSpace[index].append(letter); //agrega la letra al espacio
+    letterSpace[index].classList.add('letter-container'); //agrega la clase al espacio
+    userWordInputElement.value = ''; //limpia el input
   });
-  rowContainerElement=createGameboard(); //llamo a la funcion que crea el gameboard
-  rowContainerElement.append(fragment);
-  gameboardElement.append(rowContainerElement); //agrego la fila al gameboard
-  gameboardElement.classList.add('gameboard');
+  
   };
 
 
@@ -88,7 +88,7 @@ const createGameboard = () => {
   gameboardElement.append(rowContainerElement);
   gameboardElement.classList.add('gameboard');
   }
-  return rowContainerElement;
+  
 }
 
 const getRandomWord = () => {

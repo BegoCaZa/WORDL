@@ -50,6 +50,7 @@ body {
   background-color: transparent;
   padding-left: 10px;
   font-size: 20px;
+  color: white;
 }
 
 .gameboard{
@@ -78,3 +79,44 @@ display: flex;
 align-items: center;
 justify-content: center;
 }
+
+.letter-container-correct{
+  background-color: rgb(10, 117, 10);
+  border: solid 1px white;
+  border-radius: 2px;
+  font-size: 20px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+  .letter-container-rightLetter{
+    background-color: rgb(255, 162, 0);
+    border: solid 1px white;
+    border-radius: 2px;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .letter-container-wrong{
+      background-color: rgb(104, 104, 104);
+      border: solid 1px white;
+      border-radius: 2px;
+      font-size: 20px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      }
+
+      .alert{
+        color: red;
+        font-size: 20px;
+      }

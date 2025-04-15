@@ -5,7 +5,11 @@ const rootStyles = document.documentElement.style;
 const gameboardElement = document.getElementById('gameboard');
 
 // form
-const formElement = document.getElementById('user-solution');
+const formElement = document.getElementById('form');
+
+//input
+const userWordInputElement = document.getElementById('user-solution');
+
 //obejto palabras
 const ALL_WORDS = [
   'zara',
@@ -32,13 +36,34 @@ let numberOfAttempts = 0;
 
 const validateWord = event => {
   event.preventDefault();
-};
 
-const getRandomWord = () => {
-  const randomIndex = Math.floor(Math.random() * ALL_WORDS.length);
-  const randomWord = ALL_WORDS[randomIndex];
-  return randomWord;
-};
+  //numero de intentos
+  // numberOfAttempts++;
+  // if(numberOfAttempts>5){
+  //   const alert=document.createElement('span');
+  //   alert.classList.add('alert');
+  //   alert.textContent='Has perdido';
+  //   gameboardElement.append(alert);
+  // }
+  const userWord = userWordInputElement.value.split(''); //guardar por letra
+  console.log(userWord);
+
+  const fragment = document.createDocumentFragment();
+
+  userWord.forEach(letter => {
+    const userletterElement = document.createElement('span'); 
+    userletterElement.textContent = letter; //hago la letra
+    userletterElement.classList.add('letter-container'); //le doy estilo
+    fragment.append(userletterElement);
+  });
+  rowContainerElement=createGameboard(); //llamo a la funcion que crea el gameboard
+  rowContainerElement.append(fragment);
+  gameboardElement.append(rowContainerElement); //agrego la fila al gameboard
+  gameboardElement.classList.add('gameboard');
+  };
+
+
+
 
 const createGameboard = () => {
   const word = getRandomWord();
@@ -63,9 +88,17 @@ const createGameboard = () => {
   gameboardElement.append(rowContainerElement);
   gameboardElement.classList.add('gameboard');
   }
+  return rowContainerElement;
 }
+
+const getRandomWord = () => {
+  const randomIndex = Math.floor(Math.random() * ALL_WORDS.length);
+  const randomWord = ALL_WORDS[randomIndex];
+  return randomWord;
+};
 
 createGameboard();
 
 //EVENTOS
 formElement.addEventListener('submit', validateWord);
+

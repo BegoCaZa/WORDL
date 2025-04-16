@@ -42,13 +42,15 @@ const validateWord = event => {
   const userWord = userWordInputElement.value; //guardar por letra
   console.log(userWord);
 
-  // if (document.body.includes(alert)) {
-  //   alert.remove();
-  // }
+  let existingWarning = document.querySelector('.alert'); //busco si ya existe un p de warning
+  if (existingWarning) {
+    existingWarning.remove(); //lo elimino si existe
+    return;
+  }
 
   //numero de intentos
   numberOfAttempts++;
-  if (numberOfAttempts > 5) {
+  if (numberOfAttempts >= 5) {
     const alert = document.createElement('span');
     alert.classList.add('alert');
     alert.textContent = 'Has perdido';
@@ -68,11 +70,11 @@ const validateWord = event => {
     userWord.length > randomWord.length ||
     userWord.length < randomWord.length
   ) {
+    numberOfAttempts--;
     const alert = document.createElement('span');
     alert.classList.add('alert');
     alert.textContent = `Introduce una palabra con ${randomWord.length} letras`;
     gameContainerElement.append(alert);
-    numberOfAttempts = 0;
     return;
   }
 

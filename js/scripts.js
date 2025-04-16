@@ -95,12 +95,7 @@ const validateWord = event => {
         'letter-container',
         'letter-container-correct'
       ); //agrega la clase al espacio
-    };
-  });
-
-  userWord.split('').forEach((letter,index) => {
-
-    if (randomWord.includes(letter) && letter !== randomWordArray[index]) {
+    } else if (randomWord.includes(letter) && letter !== randomWordArray[index]) {
       console.log('existe pero en otra posicion');
       letterBox[index].append(letter); //agrega la letra al espacio
       letterBox[index].classList.add(
@@ -108,14 +103,14 @@ const validateWord = event => {
         'letter-container-rightLetter'
       );
      } 
-    // else {
-    //   console.log('las letras no coiciden');
-    //   letterBox[index].append(letter); //agrega la letra al espacio
-    //   letterBox[index].classList.add(
-    //     'letter-container',
-    //     'letter-container-wrong'
-    //   );
-    // }
+    else {
+      console.log('las letras no coiciden');
+      letterBox[index].append(letter); //agrega la letra al espacio
+      letterBox[index].classList.add(
+        'letter-container',
+        'letter-container-wrong'
+      );
+    }
   });
 
   // userWordInputElement.value = ''; //limpia el input

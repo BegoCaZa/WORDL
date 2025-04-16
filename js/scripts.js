@@ -81,6 +81,8 @@ const validateWord = event => {
   //primero ubico la fila
   const row = gameboardElement.children[numberOfAttempts - 1]; //esta es la fila y que empiece en 0
   const letterBox = row.children; //esto son los espacios de la fila
+  let randomWordArray=randomWord.split(''); //checar letra por letra
+  console.log(randomWordArray);
 
 
   userWord.split('').forEach((letter, index) => {
@@ -98,8 +100,6 @@ const validateWord = event => {
 
   userWord.split('').forEach((letter,index) => {
 
-    let randomWordArray=randomWord.split(''); //checar letra por letra
-    console.log(randomWordArray);
     if (randomWord.includes(letter) && letter !== randomWordArray[index]) {
       console.log('existe pero en otra posicion');
       letterBox[index].append(letter); //agrega la letra al espacio

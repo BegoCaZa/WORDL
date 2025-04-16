@@ -3,6 +3,7 @@ const rootStyles = document.documentElement.style;
 
 //DOM
 const gameboardElement = document.getElementById('gameboard');
+const gameContainerElement = document.getElementById('game-container');
 
 // form
 const formElement = document.getElementById('form');
@@ -12,98 +13,127 @@ const userWordInputElement = document.getElementById('user-solution');
 
 //obejto palabras
 const ALL_WORDS = [
-  'zara',
-  'pelo',
-  'humo',
-  'chasqueador',
-  'zombie',
-  'atropello',
-  'ticket',
-  'infectado',
-  'hambre',
-  'accidente',
-  'vitrina',
-  'apocalipsis',
-  'supervivencia',
-  'sangre',
-  'hongo',
-  'cordyceps'
+  // 'zara',
+  // 'pelo',
+  'humo'
+  // 'chasqueador',
+  // 'zombie',
+  // 'atropello',
+  // 'ticket',
+  // 'infectado',
+  // 'hambre',
+  // 'accidente',
+  // 'vitrina',
+  // 'apocalipsis',
+  // 'supervivencia',
+  // 'sangre',
+  // 'hongo',
+  // 'cordyceps'
 ];
 
 let numberOfAttempts = 0;
+let randomWord = '';
 
 //FUNCIONES
 
 const validateWord = event => {
   event.preventDefault();
+  console.log(randomWord);
+  const userWord = userWordInputElement.value; //guardar por letra
+  console.log(userWord);
+
+  // if (document.body.includes(alert)) {
+  //   alert.remove();
+  // }
 
   //numero de intentos
   numberOfAttempts++;
-  if(numberOfAttempts>5){
-    const alert=document.createElement('span');
+  if (numberOfAttempts > 5) {
+    const alert = document.createElement('span');
     alert.classList.add('alert');
-    alert.textContent='Has perdido';
+    alert.textContent = 'Has perdido';
     gameboardElement.append(alert);
     formElement.remove();
   }
-  //validar palabra
-  const userWord = userWordInputElement.value.split(''); //guardar por letra
-  console.log(userWord);
+
+  if (userWord === randomWord) {
+    const winMessage = document.createElement('span');
+    winMessage.classList.add('winner');
+    winMessage.textContent = 'FELICIDADES! LO HAS LOGRADO';
+    gameContainerElement.append(winMessage);
+    formElement.remove();
+  }
+
+  if (
+    userWord.length > randomWord.length ||
+    userWord.length < randomWord.length
+  ) {
+    const alert = document.createElement('span');
+    alert.classList.add('alert');
+    alert.textContent = `Introduce una palabra con ${randomWord.length} letras`;
+    gameContainerElement.append(alert);
+    numberOfAttempts = 0;
+    return;
+  }
 
   //primero ubico la fila
-  const row = gameboardElement.children[numberOfAttempts-1]; //esta es la fila y que empiece en 0 
-  const letterBox= row.children; //esto son los espacios de la fila
+  const row = gameboardElement.children[numberOfAttempts - 1]; //esta es la fila y que empiece en 0
+  const letterBox = row.children; //esto son los espacios de la fila
 
-  userWord.forEach((letter,index)=> { //el index lo detecta en automatico al ser un forEach
-    letterBox[index].append(letter); //agrega la letra al espacio
-    letterBox[index].classList.add('letter-container'); //agrega la clase al espacio
+  userWord.split('').forEach((letter, index) => {
+    // //el index lo detecta en automatico al ser un forEach
 
-    //validar si la palabra es correcta
     if (letter === randomWord[index]) {
-      // Letra correcta y en la posición correcta
-      letterBox.classList.add('letter-container-correct');
+      console.log('la letra es la misma');
+      letterBox[index].append(letter); //agrega la letra al espacio
+      letterBox[index].classList.add(
+        'letter-container',
+        'letter-container-correct'
+      ); //agrega la clase al espacio
     } else if (randomWord.includes(letter)) {
-      // Letra existe pero en otra posición
-      letterBox.classList.add('letter-container-rightLetter');
+      console.log('existe pero en otra posicion');
+      letterBox[index].append(letter); //agrega la letra al espacio
+      letterBox[index].classList.add(
+        'letter-container',
+        'letter-container-rightLetter'
+      );
     } else {
-      // Letra no existe en la palabra
-      letterBox.classList.add('letter-container-wrong');
+      console.log('las letras no coiciden');
+      letterBox[index].append(letter); //agrega la letra al espacio
+      letterBox[index].classList.add(
+        'letter-container',
+        'letter-container-wrong'
+      );
     }
-
   });
-  userWordInputElement.value = ''; //limpia el input
-  
-  
-  };
 
-
-
+  // userWordInputElement.value = ''; //limpia el input
+  event.target.reset();
+};
 
 const createGameboard = () => {
-  let randomWord = getRandomWord();
+  randomWord = getRandomWord();
   console.log(randomWord);
   const letters = randomWord.split('');
-  
+
   for (let i = 0; i < 5; i++) {
-    
-  const fragment = document.createDocumentFragment();
+    const fragment = document.createDocumentFragment();
 
-  letters.forEach(letter => {
-    const letterElement = document.createElement('span');
-    // letterElement.textContent = letter;
-    letterElement.classList.add('letter-container');
-    fragment.append(letterElement);
-  });
+    letters.forEach(letter => {
+      const letterElement = document.createElement('span');
+      // letterElement.textContent = letter;
+      letterElement.classList.add('letter-container');
+      fragment.append(letterElement);
+    });
 
-  const rowContainerElement= document.createElement('div');
-  rowContainerElement.classList.add('gameboard-row');
-  rowContainerElement.append(fragment);
+    const rowContainerElement = document.createElement('div');
+    rowContainerElement.classList.add('gameboard-row');
+    rowContainerElement.append(fragment);
 
-  gameboardElement.append(rowContainerElement);
-  gameboardElement.classList.add('gameboard');
+    gameboardElement.append(rowContainerElement);
+    gameboardElement.classList.add('gameboard');
   }
-  
-}
+};
 
 const getRandomWord = () => {
   const randomIndex = Math.floor(Math.random() * ALL_WORDS.length);
@@ -115,4 +145,3 @@ createGameboard();
 
 //EVENTOS
 formElement.addEventListener('submit', validateWord);
-

@@ -117,6 +117,12 @@ justify-content: center;
       }
 
       .alert{
+        margin-top: 10px;
         color: red;
+        font-size: 20px;
+      }
+
+      .winner{
+        color: green;
         font-size: 20px;
       }

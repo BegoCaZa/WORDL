@@ -52,13 +52,27 @@ const validateWord = event => {
 
   //primero ubico la fila
   const row = gameboardElement.children[numberOfAttempts-1]; //esta es la fila y que empiece en 0 
-  const letterSpace= row.children; //esto son los espacios de la fila
+  const letterBox= row.children; //esto son los espacios de la fila
 
   userWord.forEach((letter,index)=> { //el index lo detecta en automatico al ser un forEach
-    letterSpace[index].append(letter); //agrega la letra al espacio
-    letterSpace[index].classList.add('letter-container'); //agrega la clase al espacio
-    userWordInputElement.value = ''; //limpia el input
+    letterBox[index].append(letter); //agrega la letra al espacio
+    letterBox[index].classList.add('letter-container'); //agrega la clase al espacio
+
+    //validar si la palabra es correcta
+    if (letter === randomWord[index]) {
+      // Letra correcta y en la posición correcta
+      letterBox.classList.add('letter-container-correct');
+    } else if (randomWord.includes(letter)) {
+      // Letra existe pero en otra posición
+      letterBox.classList.add('letter-container-rightLetter');
+    } else {
+      // Letra no existe en la palabra
+      letterBox.classList.add('letter-container-wrong');
+    }
+
   });
+  userWordInputElement.value = ''; //limpia el input
+  
   
   };
 
@@ -66,9 +80,9 @@ const validateWord = event => {
 
 
 const createGameboard = () => {
-  const word = getRandomWord();
-  console.log(word);
-  const letters = word.split('');
+  let randomWord = getRandomWord();
+  console.log(randomWord);
+  const letters = randomWord.split('');
   
   for (let i = 0; i < 5; i++) {
     

@@ -84,7 +84,7 @@ const validateWord = event => {
  
   //separo por letras las palabras
   let userLetters = userWord.split('');
-let randomLetters = randomWord.split('');
+  let randomLetters = randomWord.split('');
 
   //marcar las verdes
   for (let i = 0; i < userLetters.length; i++) {

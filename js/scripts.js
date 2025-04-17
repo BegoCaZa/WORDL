@@ -81,45 +81,52 @@ const validateWord = event => {
   //primero ubico la fila
   const row = gameboardElement.children[numberOfAttempts - 1]; //esta es la fila y que empiece en 0
   const letterBox = row.children; //esto son los espacios de la fila
-  // let randomWordArray=randomWord.split(''); //checar letra por letra
-  // console.log(randomWordArray);
+ 
+  //separo por letras las palabras
+  let userLetters = userWord.split('');
+let randomLetters = randomWord.split('');
 
-
-  userWord.split('').forEach((letter, index) => {
-    // //el index lo detecta en automatico al ser un forEach
-
-    if (letter === randomWord[index]) {
+  //marcar las verdes
+  for (let i = 0; i < userLetters.length; i++) {
+    if (userLetters[i] === randomLetters[i]) {
       console.log('la letra es la misma');
-      letterBox[index].append(letter); 
-      letterBox[index].classList.add(
+      letterBox[i].append(userLetters[i]); 
+      letterBox[i].classList.add(
         'letter-container',
         'letter-container-correct'
       ); 
+      if (userLetters[i] === (/[a-z]/.test(userLetters[i]))) {
+        userLetters[i] = '*'; //deja de ser letra
+    
+  };
     }
-  });
-  
-  userWord.split('').forEach((letter, index) => {
+  };
+  //marcar las amarillas y grises
+    for (let i = 0; i < userLetters.length; i++) {
 
-    for (let i = 1; i < randomWord.length; i++) {
-      if (randomWord.includes(letter) && letter !== randomWord[index]) {
+      if(userLetters[i] === (!/[a-z]/.test(userLetters[i])) ) {
+        i++;
+      if (randomLetters.includes(userLetters[i]) && userLetters[i] !== randomWord[i]) {
         console.log('existe pero en otra posicion');
-        letterBox[index].append(letter); //agrega la letra al espacio
-        letterBox[index].classList.add(
+        letterBox[i].append(userLetters[i]); //agrega la letra al espacio
+        letterBox[i].classList.add(
           'letter-container',
           'letter-container-rightLetter'
         );
+        
        } 
       else {
         console.log('las letras no coiciden');
-        letterBox[index].append(letter); //agrega la letra al espacio
-        letterBox[index].classList.add(
+        letterBox[i].append(userLetters[i]); //agrega la letra al espacio
+        letterBox[i].classList.add(
           'letter-container',
           'letter-container-wrong'
         );
       }
     }
+    }
    
-  });
+
 
   // userWordInputElement.value = ''; //limpia el input
   event.target.reset();

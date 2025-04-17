@@ -104,8 +104,8 @@ let randomLetters = randomWord.split('');
   //marcar las amarillas y grises
     for (let i = 0; i < userLetters.length; i++) {
 
-      if(userLetters[i] === (!/[a-z]/.test(userLetters[i])) ) {
-        i++;
+      if(userLetters[i] === '*') { 
+        i++;}
       if (randomLetters.includes(userLetters[i]) && userLetters[i] !== randomWord[i]) {
         console.log('existe pero en otra posicion');
         letterBox[i].append(userLetters[i]); //agrega la letra al espacio
@@ -124,9 +124,7 @@ let randomLetters = randomWord.split('');
         );
       }
     }
-    }
-   
-
+    
   // userWordInputElement.value = ''; //limpia el input
   event.target.reset();
 };

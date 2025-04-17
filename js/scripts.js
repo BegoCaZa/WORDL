@@ -81,33 +81,41 @@ const validateWord = event => {
   //primero ubico la fila
   const row = gameboardElement.children[numberOfAttempts - 1]; //esta es la fila y que empiece en 0
   const letterBox = row.children; //esto son los espacios de la fila
+  let wordToCheck = randomWord;
  
   userWord.split('').forEach((letter, index) => {
     // //el index lo detecta en automatico al ser un forEach
 
     if (letter === randomWord[index]) {
       console.log('la letra es la misma');
-      letterBox[index].append(letter); //agrega la letra al espacio
+      letterBox[index].textContent=letter; //agrega la letra al espacio
       letterBox[index].classList.add(
         'letter-container',
         'letter-container-correct'
-      ); //agrega la clase al espacio
-    } else if (randomWord.includes(letter) && letter !== randomWord) {
-      console.log('existe pero en otra posicion');
-      letterBox[index].append(letter); //agrega la letra al espacio
-      letterBox[index].classList.add(
-        'letter-container',
-        'letter-container-rightLetter'
-      );
-     } 
-    else {
-      console.log('las letras no coiciden');
-      letterBox[index].append(letter); //agrega la letra al espacio
-      letterBox[index].classList.add(
-        'letter-container',
-        'letter-container-wrong'
-      );
+      ); 
+      wordToCheck=wordToCheck.replace(letter, '*'); //elimina la letra correcta de la palabra a comparar
     }
+  });
+
+      userWord.split('').forEach((letter, index) => {
+        if (wordToCheck.includes(letter)) {
+          console.log('existe pero en otra posicion');
+          letterBox[index].append(letter); 
+          letterBox[index].classList.add(
+            'letter-container',
+            'letter-container-rightLetter'
+          );
+         } 
+        else if (!letterBox[index].classList.contains('letter-container-correct')) {
+          //si no es correcta y no es la letra correcta
+          console.log('las letras no coiciden');
+          letterBox[index].append(letter); //agrega la letra al espacio
+          letterBox[index].classList.add(
+            'letter-container',
+            'letter-container-wrong'
+          );
+    } 
+    letterBox[index].textContent = letter; //agrega la letra al espacio
   });
 
   // userWordInputElement.value = ''; //limpia el input

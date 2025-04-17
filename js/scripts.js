@@ -127,7 +127,6 @@ let randomLetters = randomWord.split('');
     }
    
 
-
   // userWordInputElement.value = ''; //limpia el input
   event.target.reset();
 };
